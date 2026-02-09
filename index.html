@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Fire Clash Squad DUO Tournament Registration</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Theme Overrides */
+        :root {
+            --ff-orange: #FF9900;
+            --ff-blue: #00CCFF;
+            --ff-dark: #0A0A12;
+            --ff-dark-secondary: #151525;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--ff-dark);
+            color: #ffffff;
+            background-image: 
+                linear-gradient(rgba(10, 10, 18, 0.8), rgba(10, 10, 18, 0.9)),
+                url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Fire Embers Effect (Simulated via CSS) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-: 
+                radial-gradient(circle at 50% 50%, rgba(255, 69, 0, 0.1), transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(0, 204, 255, 0.15), transparent 40%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        h1, h2, h3, .brand-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A12; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF9900; 
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+        }
+
+        @keyframes pulse-orange {
+            0% { box-shadow: 0 0 0 0 rgba(255, 153, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 153, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 153, 0, 0); }
+        }
+        
+        .btn-pulse {
+            animation: pulse-orange 2s infinite;
+        }
+
+        .section-hidden {
+            display: none;
+        }
+
+        .active-tab {
+            color: var(--ff-orange);
+            border-bottom: 2px solid var(--ff-orange);
+        }
+
+        /* Input Styles */
+        .ff-input {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .ff-input:focus {
+            outline: none;
+            border-color: var(--ff-orange);
+            background-color: rgba(255, 153, 0, 0.05);
+            box-shadow: 0 0 10px rgba(255, 153, 0, 0.2);
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(45deg, #FF9900, #FF5500);
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(255, 85, 0, 0.4);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-gray-200">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-[#151525]/90 backdrop-blur-md border-b border-gray-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo / Brand -->
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="brand-font text-2xl font-bold bg-gradient-to-r from-orange-400 to-yellow-500 bg-clip-text text-transparent">TOURNAMENT</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <button onclick="showSection('home')" id="nav-home" class="active-tab px-3 py-2 rounded-md text-sm font-medium hover:text-orange-400 transition-colors uppercase tracking-wider">Home</button>
+                        <button onclick="showSection('registration')" id="nav-registration" class="px-3 py-2 rounded-md text-sm font-medium hover:text-orange-400 transition-colors uppercase tracking-wider">Registration</button>
+                        <button onclick="showSection('rules')" id="nav-rules" class="px-3 py-2 rounded-md text-sm font-medium hover:text-orange-400 transition-colors uppercase tracking-wider">Rules</button>
+                        <button onclick="showSection('help')" id="nav-help" class="px-3 py-2 rounded-md text-sm font-medium hover:text-orange-400 transition-colors uppercase tracking-wider">Help</button>
+                    </div>
+                </div>
+
+               <!-- Mobile Menu Button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-[#151525] border-b border-gray-800" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <button onclick="showSection('home'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">HOME</button>
+                <button onclick="showSection('registration'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">REGISTRATION</button>
+                <button onclick="showSection('rules'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">RULES</button>
+                <button onclick="showSection('help'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">HELP</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow container mx-auto px-4 py-8 relative">
+
+        <!-- HOME SECTION -->
+        <section id="home" class="animate-fade-in max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <h1 class="text-4xl md:text-6xl font-black mb-4 glow-text text-white">
+                    CLASH SQUAD <span class="text-orange-500">DUO</span> TOURNAMENT
+                </h1>
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                    Prove your skills in the ultimate battleground. Register now to compete against the best duos and claim your victory!
+                </p>
+                <div class="mt-8">
+                    <button onclick="showSection('registration')" class="btn-primary btn-pulse px-8 py-3 rounded text-xl shadow-lg">Register Now</button>
+                </div>
+            </div>
+
+            <!-- Image Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12">
+                <div class="relative group overflow-hidden rounded-lg border border-gray-800 shadow-xl aspect-video">
+                    <img src="https://i.postimg.cc/L4Twx6Lm/Picsart-26-02-09-14-31-34-349.png" alt="Esports Arena" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                    <div class="absolute bottom-0 left-0 p-4">
+                        <h3 class="text-white font-bold text-lg">Elite Competition</h3>
+                    </div>
+                </div>
+                <div class="relative group overflow-hidden rounded-lg border border-gray-800 shadow-xl aspect-video">
+                    <img src="https://i.postimg.cc/VkTFK2DD/file-00000000f3607208930da25630ddc78b.png" alt="Gaming Setup" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                    <div class="absolute bottom-0 left-0 p-4">
+                        <h3 class="text-white font-bold text-lg">Rules & Conditions</h3>
+                    </div>
+                </div>
+                <div class="relative group overflow-hidden rounded-lg border border-gray-800 shadow-xl aspect-video">
+                    <img src="https://i.postimg.cc/xdCWmrqp/Picsart-26-02-08-22-48-30-415.jpg" alt="Victory" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                    <div class="absolute bottom-0 left-0 p-4">
+                        <h3 class="text-white font-bold text-lg">Grand Prizes</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- REGISTRATION SECTION -->
+        <section id="registration" class="section-hidden animate-fade-in max-w-2xl mx-auto">
+            <div class="bg-[#151525] p-6 md:p-8 rounded-xl border border-gray-800 shadow-2xl">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-white mb-2">TEAM REGISTRATION</h2>
+                    <div class="h-1 w-20 bg-orange-500 mx-auto"></div>
+                </div>
+
+                <form id="regForm" onsubmit="handleRegistration(event)">
+                    <!-- Step 1: Team Details -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Team Name</label>
+                            <input type="text" id="teamName" required class="w-full px-4 py-2 rounded ff-input focus:ring-1 focus:ring-orange-500" placeholder="e.g. Eagle Warriors">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Player 1 UID (Captain)</label>
+                            <input type="number" id="p1uid" required class="w-full px-4 py-2 rounded ff-input" placeholder="123456789">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Player 2 UID</label>
+                            <input type="number" id="p2uid" required class="w-full px-4 py-2 rounded ff-input" placeholder="6200050613">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">State</label>
+                            <input type="text" id="state" required class="w-full px-4 py-2 rounded ff-input" placeholder="e.g. Bihar">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">District</label>
+                            <input type="text" id="district" required class="w-full px-4 py-2 rounded ff-input" placeholder="e.g. Muzaffarpur">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Country</label>
+                            <input type="text" value="India" disabled class="w-full px-4 py-2 rounded bg-gray-800 border border-gray-700 text-gray-400 cursor-not-allowed">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Phone Number</label>
+                            <input type="tel" id="phone" required pattern="[0-9]{10}" class="w-full px-4 py-2 rounded ff-input" placeholder="10 Digit Mobile No">
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <button type="submit" class="w-full btn-primary py-3 rounded font-bold text-lg">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- RULES SECTION -->
+        <section id="rules" class="section-hidden animate-fade-in max-w-3xl mx-auto">
+            <div class="bg-[#151525] p-8 rounded-xl border border-gray-800 shadow-2xl">
+                <h2 class="text-3xl font-bold text-white mb-6 text-center">TOURNAMENT RULES</h2>
+                
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 h-6 w-6 rounded-full bg-orange-500/20 flex items-center justify-center mt-1 mr-3">
+                            <span class="text-orange-500 text-sm font-bold">1</span>
+                        </div>
+                        <p class="text-gray-300">Only mobile players are allowed. No emulators permitted.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 h-6 w-6 rounded-full bg-orange-500/20 flex items-center justify-center mt-1 mr-3">
+                            <span class="text-orange-500 text-sm font-bold">2</span>
+                        </div>
+                        <p class="text-gray-300">Mode: Clash Squad - DUO only.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 h-6 w-6 rounded-full bg-orange-500/20 flex items-center justify-center mt-1 mr-3">
+                            <span class="text-orange-500 text-sm font-bold">3</span>
+                        </div>
+                        <p class="text-gray-300">Format: Point match (each team play 5 matches for qualify).</p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 h-6 w-6 rounded-full bg-orange-500/20 flex items-center justify-center mt-1 mr-3">
+                            <span class="text-orange-500 text-sm font-bold">4</span>
+                        </div>
+                        <p class="text-gray-300">Restricted Guns: UMP, MP40, Desert Eagle, M1887 only.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 h-6 w-6 rounded-full bg-orange-500/20 flex items-center justify-center mt-1 mr-3">
+                            <span class="text-orange-500 text-sm font-bold">5</span>
+                        </div>
+                        <p class="text-gray-300">Hacks, scripts, and any form of cheating are strictly prohibited. Instant disqualification.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 h-6 w-6 rounded-full bg-orange-500/20 flex items-center justify-center mt-1 mr-3">
+                            <span class="text-orange-500 text-sm font-bold">6</span>
+                        </div>
+                        <p class="text-gray-300">Entry fee is non-refundable under any circumstances.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 h-6 w-6 rounded-full bg-orange-500/20 flex items-center justify-center mt-1 mr-3">
+                            <span class="text-orange-500 text-sm font-bold">7</span>
+                        </div>
+                        <p class="text-gray-300">Organizer’s decision will be final in case of any disputes.</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button onclick="showSection('registration')" class="text-orange-400 hover:text-orange-300 underline font-medium">Agree & Register</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- HELP SECTION -->
+        <section id="help" class="section-hidden animate-fade-in max-w-2xl mx-auto text-center">
+            <div class="bg-[#151525] p-8 rounded-xl border border-gray-800 shadow-2xl">
+                <h2 class="text-3xl font-bold text-white mb-6">SUPPORT CENTER</h2>
+                
+                <div class="bg-gray-800/50 p-6 rounded-lg mb-6">
+                    <p class="text-gray-400 mb-2 uppercase text-sm tracking-widest">Organizer Contact</p>
+                    <p class="text-2xl font-mono text-white tracking-wider">+91 6200050613</p>
+                </div>
+
+                <p class="text-gray-400 mb-6">
+                    Facing issues with registration? Need clarification on rules?<br>
+                    Chat with us directly on WhatsApp for instant support.
+                </p>
+
+                <a href="https://wa.me/916200050613" target="_blank" class="inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full transition-all hover:scale-105 shadow-lg">
+                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.008-.57-.008-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    Chat on WhatsApp
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#0A0A12] border-t border-gray-800 py-6">
+        <div class="container mx-auto text-center text-gray-500 text-sm">
+            <p>&copy; 2023 Free Fire DUO Tournament affiliated with Garena.</p>
+        </div>
+    </footer>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-black bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            
+            <div class="inline-block align-bottom bg-[#151525] rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full border border-gray-700">
+                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <h3 class="text-xl leading-6 font-bold text-white mb-4 flex items-center" id="modal-title">
+                                <svg class="w-6 h-6 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                Complete Payment
+                            </h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-400 mb-4">Scan the QR code to pay the entry fee.</p>
+                                
+                                <div class="bg-white p-4 mx-auto w-48 h-48 rounded flex items-center justify-center mb-6">
+                                    <!-- QR Placeholder using an API or simple text -->
+                                    <img src="https://i.postimg.cc/gkjkG7H5/Screenshot_20260209_124513.png" alt="Payment QR" class="w-full h-full">
+                                </div>
+
+                                <label class="block text-sm font-medium text-gray-400 mb-1 text-left">Enter UTR / Transaction ID</label>
+                                <input type="text" id="utrNumber" class="w-full px-4 py-2 rounded ff-input text-white placeholder-gray-500" placeholder="e.g. 3284xxxx1293">
+                                <p id="utrError" class="text-red-500 text-xs mt-1 hidden">Please enter a valid UTR number.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#0A0A12] px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" onclick="submitPayment()" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-600 text-base font-medium text-white hover:bg-orange-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        Proceed
+                    </button>
+                    <button type="button" onclick="closeModal('paymentModal')" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-transparent text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-black bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            
+            <div class="inline-block align-bottom bg-[#151525] rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm w-full border border-green-500/50">
+                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4 text-center">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100/10 mb-4">
+                        <svg class="h-10 w-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl leading-6 font-bold text-white mb-2">Congratulations! 🎉</h3>
+                    <div class="mt-2">
+                        <p class="text-gray-300">
+                            Your registration is in progress.
+                        </p>
+                        <p class="text-sm text-gray-400 mt-2">
+                            Final confirmation will be sent to your WhatsApp number shortly.
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-[#0A0A12] px-4 py-3 sm:px-6">
+                    <button type="button" onclick="finishRegistration()" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none sm:text-sm">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Store form data temporarily
+        let registrationData = {};
+
+        // Navigation Logic
+        function showSection(sectionId) {
+            const sections = ['home', 'registration', 'rules', 'help'];
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.classList.add('section-hidden');
+            });
+            
+            const target = document.getElementById(sectionId);
+            if(target) target.classList.remove('section-hidden');
+            
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.classList.remove('active-tab');
+                btn.classList.add('text-gray-300');
+            });
+            
+            const activeBtn = document.getElementById(`nav-${sectionId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('active-tab');
+                activeBtn.classList.remove('text-gray-300');
+            }
+            
+            window.scrollTo(0, 0);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        }
+
+        // Modal Logic
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+            } else {
+                console.error('Modal not found:', modalId);
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Step 1: Handle Form Submit
+        function handleRegistration(event) {
+            event.preventDefault();
+            console.log("Handling registration...");
+            
+            const teamName = document.getElementById('teamName').value;
+            const p1uid = document.getElementById('p1uid').value;
+            const p2uid = document.getElementById('p2uid').value;
+            const state = document.getElementById('state').value;
+            const district = document.getElementById('district').value;
+            const phone = document.getElementById('phone').value;
+
+            // Collect data
+            registrationData = {
+                teamName,
+                p1uid,
+                p2uid,
+                state,
+                district,
+                country: 'India',
+                phone
+            };
+
+            // Validation
+            if (!teamName || !p1uid || !p2uid || !state || !district || !phone) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            if(phone.length < 10) {
+                alert("Please enter a valid phone number (at least 10 digits).");
+                return;
+            }
+
+            console.log("Validation passed, opening modal.");
+            // Open Payment Modal
+            showModal('paymentModal');
+        }
+
+        // Step 2: Handle Payment Submit
+        function submitPayment() {
+            const utr = document.getElementById('utrNumber').value;
+            if (!utr || utr.length < 6) {
+                document.getElementById('utrError').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('utrError').classList.add('hidden');
+            
+            registrationData.utr = utr;
+
+            // Send to Telegram
+            sendToTelegram(registrationData);
+
+            // Show Success Modal
+            closeModal('paymentModal');
+            showModal('successModal');
+        }
+
+        // Step 3: Finish
+        function finishRegistration() {
+            closeModal('successModal');
+            document.getElementById('regForm').reset();
+            document.getElementById('utrNumber').value = '';
+            showSection('home');
+        }
+
+        // Telegram Integration
+        function sendToTelegram(data) {
+            const botToken = "8319146500:AAEcUIzixAYgVOTpmoqqdkLpbfwNUjxaafA";
+            const chatId = "6617203855";
+            
+            const message = `
+🎮 *New Tournament Registration* 🎮
+
+*Team Name:* ${data.teamName}
+*Captain UID:* ${data.p1uid}
+*Player 2 UID:* ${data.p2uid}
+*Location:* ${data.district}, ${data.state}
+*Phone:* ${data.phone}
+
+💰 *Payment Details*
+*UTR:* ${data.utr}
+            `;
+
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Telegram Success:', data);
+            })
+            .catch((error) => {
+                console.error('Telegram Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
